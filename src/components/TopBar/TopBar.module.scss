@@ -1,0 +1,27 @@
+.TopBar {
+    height: 70px;
+    background-color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+
+    .links {
+        width: 250px;
+        margin: auto;
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: space-between;
+        align-items: center;
+
+        .link {
+            font-family: Avenir;
+            font-weight: 500;
+            font-size: 20px;
+            cursor: pointer;
+
+            &:hover {
+                color: #004e1d !important;
+            }
+        }
+    }
+}

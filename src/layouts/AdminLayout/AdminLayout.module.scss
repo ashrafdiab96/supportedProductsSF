@@ -1,0 +1,11 @@
+.DefaultLayout{
+    display: flex;
+    height: 1000px;
+    .topBarAndContent{
+        width: 1650px;
+    }
+    .content{
+        overflow-y: hidden;
+        background-color: var(--bg1);
+    }
+}
