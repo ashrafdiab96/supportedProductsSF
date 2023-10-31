@@ -3,11 +3,9 @@ import styles from './categories.module.scss';
 import Head from 'next/head';
 import AdminLayout from '@/layouts/AdminLayout/AdminLayout';
 import { useDispatch, useSelector } from 'react-redux';
-import { categoriesThunk } from '@/redux/thunks/categoriesThunk';
+import { categoriesThunk, deleteCategoryThunk } from '@/redux/thunks/categoriesThunk';
 import { useEffect } from 'react';
 import Link from 'next/link';
-import DeleteIcon from '@/components/UI/icons/DeleteIcon';
-import EditIcon from '@/components/UI/icons/EditIcon';
 
 const Categories = () => {
     const dispatch = useDispatch();
@@ -36,6 +34,11 @@ const Categories = () => {
         dispatch(categoriesThunk(currentPage - 1));
     };
 
+    const deleteItem = async (id) => {
+        await dispatch(deleteCategoryThunk(id));
+        dispatch(categoriesThunk(currentPage));
+    }
+
     return (
         <AdminLayout>
             <div className={styles.main}>
@@ -43,7 +46,10 @@ const Categories = () => {
                     <title>Admin | Categories</title>
                 </Head>
                 <div className={styles.data}>
-                    <button className={styles.addBtn}>New</button>
+                    <Link
+                        className={styles.addBtn}
+                        href={`/admin-panel/categories/add`}
+                    >New</Link>
                     <table className='table table-striped table-bordered my-0 mx-auto'>
                         <thead>
                             <th>ID</th>
@@ -60,8 +66,14 @@ const Categories = () => {
                                             <th>{item?.name_ar}</th>
                                             <th>{item?.name_en}</th>
                                             <th>
-                                                <button className={styles.editBtn}>Edit</button>
-                                                <button className={styles.removeBtn}>Remove</button>
+                                                <Link
+                                                    className={styles.editBtn}
+                                                    href={`/admin-panel/categories/edit/${item?.id}`}
+                                                >Edit</Link>
+                                                <a
+                                                    className={styles.removeBtn}
+                                                    onClick={() => deleteItem(item?.id)}
+                                                >Remove</a>
                                             </th>
                                         </tr>
                                     );

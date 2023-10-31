@@ -17,6 +17,9 @@
             background-color: #28a745;
             color: #FFFFFF !important;
             margin: 10px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         table {
@@ -36,8 +39,7 @@
 
                         .editBtn,
                         .removeBtn {
-                            width: 80px;
-                            height: 30px;
+                            padding: 5px 20px;
                             cursor: pointer;
                             border: 1px solid #E0E0E0;
                             margin: 0 10px;

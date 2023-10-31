@@ -41,7 +41,7 @@ a {
 @font-face {
     font-family: Avenir;
     src: url("/fonts/Avenir Book.otf") format("opentype");
-    font-weight: 400;
+    // font-weight: 400;
 }
 
 .separator {
@@ -83,4 +83,8 @@ a {
   * {
     border-color: var(--bg2) !important;
   }
+}
+
+.inpError {
+    border: 1px solid #dc3545 !important;
 }
