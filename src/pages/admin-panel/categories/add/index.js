@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import styles from './add.module.scss';
 import AdminLayout from '@/layouts/AdminLayout/AdminLayout';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { createCategoryThunk } from '@/redux/thunks/categoriesThunk';
+import { CircularProgress } from '@mui/material';
+import Head from 'next/head';
 
 const AddCategory = () => {
     const dispatch = useDispatch();
@@ -12,6 +14,9 @@ const AddCategory = () => {
     const [nameAR, setNameAR] = useState('');
     const [nameEN, setNameEN] = useState('');
     const [nameARValid, setNameARValid] = useState(true);
+
+    const { loading } = useSelector(state => state.categories);
+    console.log(loading)
 
     const validate = () => {
         setNameARValid(nameAR == '' ? false : true);
@@ -31,6 +36,9 @@ const AddCategory = () => {
     return (
         <AdminLayout>
             <div className={styles.main}>
+                <Head>
+                    <title>Admin | Categories | Add</title>
+                </Head>
                 <div className={styles.form}>
                     <p className={styles.title}>Add Category</p>
                     <input
@@ -50,7 +58,8 @@ const AddCategory = () => {
                     <button
                         className={styles.btn}
                         onClick={save}
-                    >Submit</button>
+                    >
+                        {loading ? (<CircularProgress />) : 'Submit'}</button>
                 </div>
             </div>
         </AdminLayout>

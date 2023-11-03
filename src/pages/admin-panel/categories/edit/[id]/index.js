@@ -4,6 +4,7 @@ import AdminLayout from '@/layouts/AdminLayout/AdminLayout';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { categoryThunk, updateCategoryThunk } from '@/redux/thunks/categoriesThunk';
+import Head from 'next/head';
 
 const EditCategory = () => {
     const dispatch = useDispatch();
@@ -46,6 +47,9 @@ const EditCategory = () => {
     return (
         <AdminLayout>
             <div className={styles.main}>
+                <Head>
+                    <title>Admin | Categories | Edit</title>
+                </Head>
                 <div className={styles.form}>
                     <p className={styles.title}>Edit Category</p>
                     <input

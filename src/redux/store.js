@@ -4,6 +4,7 @@ import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 
 import authSlice from "./slices/authSlice";
 import categoriesSlice from "./slices/categoriesSlice";
+import productsSlice from "./slices/productsSlice";
 
 const createNoopStorage = () => {
   return {
@@ -34,6 +35,7 @@ const persistedReducer = persistReducer(
   combineReducers({
     auth: authSlice.reducer,
     categories: categoriesSlice.reducer,
+    products: productsSlice.reducer,
   })
 );
 

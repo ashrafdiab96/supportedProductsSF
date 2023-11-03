@@ -1,40 +1,39 @@
-import React, { useState } from 'react';
-import styles from './categories.module.scss';
+import React, { useState, useEffect } from 'react';
+import styles from './products.module.scss';
 import Head from 'next/head';
 import AdminLayout from '@/layouts/AdminLayout/AdminLayout';
 import { useDispatch, useSelector } from 'react-redux';
-import { categoriesThunk, deleteCategoryThunk } from '@/redux/thunks/categoriesThunk';
-import { useEffect } from 'react';
 import Link from 'next/link';
 import ConfirmDelete from '@/components/ConfirmDelete/ConfirmDelete';
+import { deleteProductThunk, productsThunk } from '@/redux/thunks/productsThunk';
 
-const Categories = () => {
+const Products = () => {
     const dispatch = useDispatch();
     const [currentPage, setCurrentPage] = useState(1);
     const [isOpen, setIsOpen] = useState(false);
     const [selectedItem, setSelectedItem] = useState();
 
-    const { categories, loading } = useSelector(state => state.categories);
+    const { products, loading } = useSelector(state => state.products);
 
     useEffect(() => {
-        dispatch(categoriesThunk(1));
+        dispatch(productsThunk(1));
     }, []);
 
     const handlePagination = (page) => {
         setCurrentPage(page);
-        dispatch(categoriesThunk(page));
+        dispatch(productsThunk(page));
     };
 
     const handleNextPage = () => {
-        if (currentPage == categories?.last_page) return;
+        if (currentPage == products?.last_page) return;
         setCurrentPage(currentPage + 1);
-        dispatch(categoriesThunk(currentPage + 1));
+        dispatch(productsThunk(currentPage + 1));
     };
 
     const handlePrevPage = () => {
         if (currentPage == 1) return;
         setCurrentPage(currentPage - 1);
-        dispatch(categoriesThunk(currentPage - 1));
+        dispatch(productsThunk(currentPage - 1));
     };
 
     const handleOpen = async (id) => {
@@ -47,8 +46,8 @@ const Categories = () => {
     };
 
     const handleDelete = async () => {
-        await dispatch(deleteCategoryThunk(selectedItem));
-        dispatch(categoriesThunk(currentPage));
+        await dispatch(deleteProductThunk(selectedItem));
+        dispatch(productsThunk(currentPage));
         setIsOpen(false);
     };
 
@@ -56,12 +55,12 @@ const Categories = () => {
         <AdminLayout>
             <div className={styles.main}>
                 <Head>
-                    <title>Admin | Categories</title>
+                    <title>Admin | Products</title>
                 </Head>
                 <div className={styles.data}>
                     <Link
                         className={styles.addBtn}
-                        href={`/admin-panel/categories/add`}
+                        href={`/admin-panel/products/add`}
                     >New</Link>
                     <table className='table table-striped table-bordered my-0 mx-auto'>
                         <thead>
@@ -69,21 +68,23 @@ const Categories = () => {
                                 <th>ID</th>
                                 <th>Name (AR)</th>
                                 <th>Name (EN)</th>
+                                <th>Category</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody className="table-group-divider">
-                            {categories?.data?.length ? (
-                                categories?.data?.map((item, index) => {
+                            {products?.data?.length ? (
+                                products?.data?.map((item, index) => {
                                     return (
                                         <tr key={index}>
                                             <th>{item?.id}</th>
                                             <th>{item?.name_ar}</th>
                                             <th>{item?.name_en}</th>
+                                            <th>{item?.category?.name_ar}</th>
                                             <th>
                                                 <Link
                                                     className={styles.editBtn}
-                                                    href={`/admin-panel/categories/edit/${item?.id}`}
+                                                    href={`/admin-panel/products/edit/${item?.id}`}
                                                 >Edit</Link>
                                                 <a
                                                     className={styles.removeBtn}
@@ -105,7 +106,7 @@ const Categories = () => {
                                         onClick={handlePrevPage}
                                     >Previous</Link>
                                 </li>
-                                {categories?.links?.slice(1, -1)?.map((item, index) => {
+                                {products?.links?.slice(1, -1)?.map((item, index) => {
                                     return (
                                         <li className="page-item" key={index}>
                                             <Link
@@ -138,4 +139,4 @@ const Categories = () => {
     );
 }
 
-export default Categories;
+export default Products;
