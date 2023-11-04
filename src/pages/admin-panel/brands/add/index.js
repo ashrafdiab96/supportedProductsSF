@@ -4,21 +4,18 @@ import AdminLayout from '@/layouts/AdminLayout/AdminLayout';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { CircularProgress } from '@mui/material';
-import { createProductThunk } from '@/redux/thunks/productsThunk';
-import { allCategoriesThunk } from '@/redux/thunks/categoriesThunk';
 import Head from 'next/head';
+import { createBrandThunk } from '@/redux/thunks/brandsThunk';
 
-const AddProducts = () => {
+const AddBrands = () => {
     const dispatch = useDispatch();
     const router = useRouter();
 
     const [nameAR, setNameAR] = useState('');
     const [nameEN, setNameEN] = useState('');
-    const [category, setCategory] = useState('');
     const [image, setImage] = useState('');
     const [supportEnemy, setSupportEnemy] = useState('');
     const [localProduct, setLocalProduct] = useState('');
-    const [namesArr, setNamesArr] = useState([{ name_ar: '', name_en: '' }]);
     const [alternativesArr, setAlternativesArr] = useState([{
         name_ar: '',
         name_en: '',
@@ -30,12 +27,7 @@ const AddProducts = () => {
     }]);
     const [nameARValid, setNameARValid] = useState(true);
 
-    const { loading, categoryProducts } = useSelector(state => state.products);
-    const { categories } = useSelector(state => state.categories);
-
-    useEffect(() => {
-        dispatch(allCategoriesThunk());
-    }, []);
+    const { loading } = useSelector(state => state.brands);
 
     const validate = () => {
         setNameARValid(nameAR == '' ? false : true);
@@ -50,29 +42,6 @@ const AddProducts = () => {
             };
             reader.readAsDataURL(file);
         }
-    };
-
-    const handleNameArChange = (e, index) => {
-        const newArray = [...namesArr];
-        newArray[index].name_ar = e.target.value;
-        setNamesArr(newArray);
-    };
-
-    const handleNameEnChange = (e, index) => {
-        const newArray = [...namesArr];
-        newArray[index].name_en = e.target.value;
-        setNamesArr(newArray);
-    };
-
-    const handleAddInput = () => {
-        setNamesArr([...namesArr, { name_ar: '', name_en: '' }]);
-    }
-
-    const handleRemoveInput = (index) => {
-        if (namesArr?.length == 1) return;
-        const newArray = [...namesArr];
-        newArray.splice(index, 1);
-        setNamesArr(newArray);
     };
 
     const handleAlterAddInput = () => {
@@ -146,17 +115,15 @@ const AddProducts = () => {
     const save = async () => {
         validate();
         if (nameARValid) {
-            await dispatch(createProductThunk({
+            await dispatch(createBrandThunk({
                 "name_ar": nameAR,
                 "name_en": nameEN,
-                "category": category,
                 "image": image,
                 "support_enemy": supportEnemy,
                 "local_product": localProduct,
-                "names": namesArr,
                 "alternatives": alternativesArr,
             }));
-            router.replace('/admin-panel/products');
+            router.replace('/admin-panel/brands');
         }
     }
 
@@ -164,10 +131,10 @@ const AddProducts = () => {
         <AdminLayout>
             <div className={styles.main}>
                 <Head>
-                    <title>Admin | Products | Create</title>
+                    <title>Admin | Brands | Create</title>
                 </Head>
                 <div className={styles.form}>
-                    <p className={styles.title}>Add Product</p>
+                    <p className={styles.title}>Add Brand</p>
                     <div className={styles.inpDiv}>
                         <input
                             className={[styles.inp, nameARValid ? '' : 'inpError'].join(' ')}
@@ -183,20 +150,6 @@ const AddProducts = () => {
                             value={nameEN}
                             onChange={e => setNameEN(e.target.value)}
                         />
-                        <select
-                            className={styles.sel}
-                            value={category}
-                            onChange={e => setCategory(e.target.value)}
-                        >
-                            <option value='' selected disabled>Category</option>
-                            {categories?.length ? (
-                                categories?.map((item, index) => {
-                                    return (
-                                        <option key={index} value={item?.id}>{item?.name_ar}</option>
-                                    );
-                                })
-                            ) : null}
-                        </select>
                         <input
                             className={styles.file}
                             type='file'
@@ -220,45 +173,6 @@ const AddProducts = () => {
                             <option value={1}>Yes</option>
                             <option value={0}>No</option>
                         </select>
-                    </div>
-                    <div className={styles.inpsContainerMain}>
-                        {namesArr?.map((input, index) => {
-                            return (
-                                <div className={styles.inpsContainer} key={index}>
-                                    <div className={styles.title}>Common Names</div>
-                                    <div className={styles.inps}>
-                                        <input
-                                            className={styles.inp}
-                                            type='text'
-                                            placeholder='Name (AR)'
-                                            value={input?.name_ar}
-                                            onChange={(e) => handleNameArChange(e, index)}
-                                        />
-                                        <input
-                                            className={styles.inp}
-                                            type='text'
-                                            placeholder='Name (EN)'
-                                            value={input?.name_en}
-                                            onChange={(e) => handleNameEnChange(e, index)}
-                                        />
-                                    </div>
-                                    <div
-                                        className={styles.inpsAdd}
-                                        onClick={handleAddInput}
-                                    >+</div>
-                                    <div
-                                        className={styles.inpsRemove}
-                                        onClick={() => handleRemoveInput(index)}
-                                        style={
-                                            namesArr.length == 1 ? {
-                                                cursor: 'default',
-                                                opacity: '0.5'
-                                            } : {}
-                                        }
-                                    >-</div>
-                                </div>
-                            );
-                        })}
                     </div>
                     <div className={styles.inpsContainerMain}>
                         {alternativesArr?.map((input, index) => {
@@ -343,4 +257,4 @@ const AddProducts = () => {
     );
 }
 
-export default AddProducts;
+export default AddBrands;

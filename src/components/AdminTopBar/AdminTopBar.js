@@ -4,13 +4,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "@/redux/store";
 import MenuIcon from "../UI/icons/MenuIcon";
 import ArrowRightIcon from "../UI/icons/ArrowRightIcon";
+import { logoutThunk } from "@/redux/thunks/authThunks";
+import { useRouter } from "next/router";
 
 const AdminTopBar = () => {
-    // const { userName } = useSelector((state) => state.user);
     const dispatch = useDispatch();
+    const router = useRouter();
+    
+    const { user } = useSelector((state) => state.auth);
   
-    const handleLogout = () => {
-        dispatch(logout());
+    const handleLogout = async () => {
+        await dispatch(logoutThunk());
+        router.replace('/login');
     };
 
     return (
@@ -22,7 +27,7 @@ const AdminTopBar = () => {
             <button className={styles.user} onClick={handleLogout}>
                 <img src="/images/person.png" alt="person" />
                 <div>
-                    {/* <h3>{userName}</h3> */}
+                    <h3>{user?.name || ''}</h3>
                     <p>Manager</p>
                 </div>
                 <ArrowRightIcon />

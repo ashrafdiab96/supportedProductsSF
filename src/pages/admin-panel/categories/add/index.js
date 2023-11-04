@@ -16,7 +16,6 @@ const AddCategory = () => {
     const [nameARValid, setNameARValid] = useState(true);
 
     const { loading } = useSelector(state => state.categories);
-    console.log(loading)
 
     const validate = () => {
         setNameARValid(nameAR == '' ? false : true);

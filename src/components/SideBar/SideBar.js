@@ -6,9 +6,11 @@ const data = [
     { name: "Home", url: "/admin-panel" },
     { name: "Categories", url: "/admin-panel/categories" },
     { name: "Products", url: "/admin-panel/products" },
-    { name: "Products Common Names", url: "/admin-panel/products-common-names" },
-    { name: "Alternatives", url: "/admin-panel/alternatives" },
-    { name: "Recommended Products", url: "/admin-panel/recommended-products" },
+    { name: "Products Common Names", url: "/admin-panel/common-names/products" },
+    { name: "Products Alternatives", url: "/admin-panel/alternatives/products" },
+    { name: "Brands", url: "/admin-panel/brands" },
+    { name: "Brands Alternatives", url: "/admin-panel/alternatives/brands" },
+    { name: "Recommended For Boycott", url: "/admin-panel/recommended-products" },
 ];
 
 const SideBar = () => {
