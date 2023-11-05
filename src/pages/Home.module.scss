@@ -1,15 +1,82 @@
-.dashboard {
-    padding: 50px;
-    height: 100%;
-    overflow-y: auto;
-    .data {
+.main {
 
-        .allDashboard {
+    .banner {
+        height: 500px;
 
-            .revenues {
-                margin-top: 20px;
-            }
+        .bannerImg {
+            width: 100%;
+            height: 100%;
         }
     }
 
+    .search {
+        width: 80%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: auto;
+        position: relative;
+
+        .inp {
+            width: 100%;
+            height: 50px;
+            margin: 30px 0;
+            background-color: #444654;
+            border: 1px solid #707070;
+            outline: none;
+            color: #FFFFFF !important;
+            padding: 20px;
+            text-align: right;
+            border-radius: 4px;
+        }
+
+        i {
+            position: absolute;
+            left: 0;
+            color: #FFFFFF !important;
+        }
+    }
+
+    .title {
+        text-align: center;
+        padding: 30px 0 0 0;
+        color: #FFFFFF !important;
+        font-size: 28px;
+        font-weight: 600;
+    }
+
+    .list {
+        display: grid;
+        justify-content: center;
+        align-items: center;
+        grid-template-columns: auto auto auto;
+        gap: 50px;
+        padding: 30px;
+    }
+}
+
+@media (max-width: 920px) {
+    .main {
+
+        .banner {
+            height: 500px;
+    
+            .bannerImg {
+                width: 100%;
+                height: 100%;
+            }
+        }
+    
+        .title {
+            text-align: center;
+            color: #FFFFFF !important;
+            font-size: 28px;
+            font-weight: 600;
+        }
+    
+        .list {
+            grid-template-columns: auto;
+            padding: 0;
+        }
+    }
 }

@@ -9,7 +9,7 @@ const DefaultLayout = ({ children }) => {
         <div className={styles.DefaultLayout}>
             <div className={styles.topBarAndContent}>
                 <TopBar />
-                <div className="separator-two"></div>
+                {/* <div className="separator-two"></div> */}
                 <div className={styles.content}>
                     {children}
                 </div>
